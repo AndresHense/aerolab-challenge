@@ -11,4 +11,12 @@ type Product = {
   img: Img;
 };
 
-export type { Img, Product };
+type User = {
+  id: string;
+  name: string;
+  points: number;
+  redeemHistory: string[];
+  createDate: string;
+};
+
+export type { Img, Product, User };

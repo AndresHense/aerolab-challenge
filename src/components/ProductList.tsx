@@ -12,9 +12,8 @@ import {
 import React, { useEffect, useState } from 'react';
 import ProductDetails from './ProductBox';
 import axios from 'axios';
-import { Product } from '../types';
-
-const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjkyYTY4NDhhMTA1NTAwMWE0NmQwMzEiLCJpYXQiOjE2NTM3NzgwNTJ9.r3Nz5Uz7kIcqYLhVSEMrlHfL8BWdsX7qyH7BqzES6Qc`;
+import { Product, User } from '../types';
+import { getProducts, getUser } from '../api/api';
 
 const productss = [
   {
@@ -32,36 +31,25 @@ enum SortingType {
   HighestPrice,
 }
 
-const ProductList = () => {
+type Props = {
+  user: User;
+  setUser: Function;
+};
+
+const ProductList = ({ user, setUser }: Props) => {
   const [products, setProducts] = useState<Product[]>(productss);
   const [loading, setLoading] = useState(true);
   const [sortingMethod, setSortingMethod] = useState<SortingType>(
     SortingType.MostRecent
   );
-  const getProducts = async () => {
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/jsom',
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      const { data } = await axios.get(
-        'https://coding-challenge-api.aerolab.co/products',
-        config
-      );
-      console.log(data);
-      setProducts(data);
-    } catch (error) {}
-  };
 
   useEffect(() => {
-    getProducts();
+    getProducts(setProducts);
     setLoading(false);
   }, []);
 
   return (
-    <VStack w='63%' pt={12} bg='#f9f9f9' spacing={6}>
+    <VStack w='63%' pt={12} bg='#f9f9f9' spacing={6} pb={20}>
       <HStack w='100%' justify='space-between' py={3}>
         <HStack spacing={6}>
           <Text fontSize='xl' color='gray.700'>
@@ -137,13 +125,13 @@ const ProductList = () => {
         >
           {products.slice(0, 16).map((product) => (
             <GridItem key={product._id}>
-              <ProductDetails product={product} />
+              <ProductDetails product={product} user={user} setUser={setUser} />
             </GridItem>
           ))}
         </Grid>
       )}
 
-      <HStack w='100%' justify='space-between' py={12} pb={8}>
+      <HStack w='100%' justify='space-between' py={12} pb={0}>
         <Text fontSize='xl' color='gray.700'>
           16 of 32 products
         </Text>
@@ -154,7 +142,7 @@ const ProductList = () => {
           variant='unstyled'
         />
       </HStack>
-      <Divider />
+      <Divider borderWidth={1} />
     </VStack>
   );
 };

@@ -8,22 +8,29 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { Product } from '../types';
+import { redeemProduct } from '../api/api';
+import { Product, User } from '../types';
 
 type Props = {
   product: Product;
+  user: User;
+  setUser: Function;
 };
 
-const user = {
-  name: 'john',
-  money: 500,
-};
-
-const ProductBox = ({ product }: Props) => {
+const ProductBox = ({ product, user, setUser }: Props) => {
   const [isHover, setIsHover] = useState(false);
-  const [canRedeem, setCanReedem] = useState(product.cost - user.money < 0);
+  const [canRedeem, setCanReedem] = useState(product.cost - user.points < 0);
   const handleHover = () => {
     setIsHover(true);
+  };
+
+  const handleRedeem = () => {
+    redeemProduct(product._id);
+    const editedUser = {
+      ...user,
+      points: user.points - product.cost,
+    };
+    setUser(editedUser);
   };
 
   return (
@@ -57,7 +64,7 @@ const ProductBox = ({ product }: Props) => {
             align='center'
           >
             <Text whiteSpace='nowrap' color='white' fontSize='xs'>
-              You need {product.cost - user.money}
+              You need {product.cost - user.points}
             </Text>
             <Image src='assets/icons/coin.svg' boxSize={6} />
           </HStack>
@@ -113,6 +120,7 @@ const ProductBox = ({ product }: Props) => {
           w='75%'
           pt={1}
           h={10}
+          onClick={handleRedeem}
         >
           Redeem now
         </Button>

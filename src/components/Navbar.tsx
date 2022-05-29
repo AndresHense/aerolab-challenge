@@ -1,7 +1,12 @@
 import { Flex, HStack, Icon, Image, Text } from '@chakra-ui/react';
 import React from 'react';
+import { User } from '../types';
 
-const Navbar = () => {
+type Props = {
+  user: User;
+};
+
+const Navbar = ({ user }: Props) => {
   return (
     <Flex
       dir='row'
@@ -14,11 +19,11 @@ const Navbar = () => {
       <Image src='assets/aerolab-logo.svg' boxSize={12} />
       <HStack spacing={4} align='center'>
         <Text fontSize='xl' color='gray.600'>
-          John Kite
+          {user.name}
         </Text>
         <HStack bg='#ececec' borderRadius={20} h={12}>
           <Text fontSize='xl' color='gray.700' pl={3}>
-            6000
+            {user.points}
           </Text>
           <Image src='assets/icons/coin.svg' pr={2} />
         </HStack>
