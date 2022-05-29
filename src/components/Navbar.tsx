@@ -14,10 +14,10 @@ const Navbar = ({ user }: Props) => {
       w='100%'
       p={4}
       px={{ base: 4, lg: 10 }}
-      pb={{ base: 2, lg: 'inherit' }}
+      pb={{ base: 2, lg: 3 }}
       align='center'
     >
-      <Image src='assets/aerolab-logo.svg' boxSize={{ base: 9, lg: 12 }} />
+      <Image src='assets/aerolab-logo.svg' boxSize={{ base: 9, lg: 10 }} />
       <HStack spacing={4} align='center'>
         <Text fontSize={{ base: 'lg', lg: 'xl' }} color='gray.600'>
           {user.name}
@@ -29,7 +29,7 @@ const Navbar = ({ user }: Props) => {
           <Image
             src='assets/icons/coin.svg'
             pr={2}
-            boxSize={{ base: 9, lg: 'inherit' }}
+            boxSize={{ base: 9, lg: 10 }}
           />
         </HStack>
       </HStack>

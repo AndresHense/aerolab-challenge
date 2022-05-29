@@ -104,7 +104,7 @@ const ProductBox = ({ product, user, setUser }: Props) => {
         bg='rgba(47,216,250,0.6)'
         w='276px'
         py='85px'
-        bottom='269px'
+        bottom='271px'
       >
         <HStack>
           <Text pt={1} fontSize='4xl' fontWeight='medium' color='white'>
