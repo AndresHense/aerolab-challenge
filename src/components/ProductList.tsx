@@ -6,6 +6,8 @@ import {
   HStack,
   IconButton,
   Image,
+  Select,
+  Stack,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -14,6 +16,7 @@ import ProductDetails from './ProductBox';
 import axios from 'axios';
 import { Product, User } from '../types';
 import { getProducts, getUser } from '../api/api';
+import NavButtons from './NavButtons';
 
 const emptyProducts: Product[] = [];
 emptyProducts.fill(
@@ -69,109 +72,162 @@ const ProductList = ({ user, setUser }: Props) => {
   }, []);
 
   return (
-    <VStack w='63%' pt={12} bg='#f9f9f9' spacing={6} pb={20}>
-      <HStack w='100%' justify='space-between' py={3}>
-        <HStack spacing={6}>
-          <Text fontSize='xl' color='gray.700'>
+    <VStack
+      w={{ base: '100%', md: '90%', lg: '83%', xl: '70%' }}
+      pt={{ base: 8, lg: 12 }}
+      px={{ base: 4, lg: 0 }}
+      bg='#f9f9f9'
+      spacing={6}
+      pb={20}
+    >
+      <HStack
+        w='100%'
+        justify='space-between'
+        py={3}
+        align={{ base: 'start', lg: 'center' }}
+      >
+        <Stack
+          spacing={{ base: 1, lg: 6 }}
+          direction={{ base: 'column', lg: 'row' }}
+          align={{ base: 'start', lg: 'center' }}
+        >
+          <Text
+            fontSize={{ base: 'lg', lg: 'xl' }}
+            color='gray.700'
+            whiteSpace='nowrap'
+          >
             {range.end} of {products.length} products
           </Text>
-          <Divider h='48px' borderWidth={1} orientation='vertical' />
-          <Text fontSize='xl' color='gray.500'>
-            Sort by:
-          </Text>
-          <Button
-            borderRadius={20}
-            h={12}
-            px={6}
-            fontSize='xl'
-            fontWeight='normal'
-            bg={
-              sortingMethod === SortingType.MostRecent ? '#00d7f6' : '#ececec'
-            }
-            color={
-              sortingMethod === SortingType.MostRecent ? 'white' : 'gray.600'
-            }
-            onClick={() => {
-              setSortingMethod(SortingType.MostRecent);
-              sortByMostRecent();
-            }}
-          >
-            Most recent
-          </Button>
-          <Button
-            borderRadius={20}
-            h={12}
-            px={6}
-            fontSize='xl'
-            fontWeight='normal'
-            bg={
-              sortingMethod === SortingType.LowestPrice ? '#00d7f6' : '#ececec'
-            }
-            color={
-              sortingMethod === SortingType.LowestPrice ? 'white' : 'gray.600'
-            }
-            onClick={() => {
-              setSortingMethod(SortingType.LowestPrice);
-              sortByLowestPrice();
-            }}
-          >
-            Lowest Price
-          </Button>
-          <Button
-            borderRadius={20}
-            h={12}
-            px={6}
-            fontSize='xl'
-            fontWeight='normal'
-            bg={
-              sortingMethod === SortingType.HighestPrice ? '#00d7f6' : '#ececec'
-            }
-            color={
-              sortingMethod === SortingType.HighestPrice ? 'white' : 'gray.600'
-            }
-            onClick={() => {
-              setSortingMethod(SortingType.HighestPrice);
-              sortByHighestPrice();
-            }}
-          >
-            Highest Price
-          </Button>
-        </HStack>
-        <HStack align='center' justify='center' spacing={5}>
-          <IconButton
-            icon={<Image src='assets/icons/arrow-left.svg' />}
-            display={showLeftArrow ? 'inherit' : 'none'}
-            aria-label='search-options-left'
-            justifySelf='end'
-            variant='unstyled'
-            pt={2}
-            _focus={{ border: 'none' }}
-            onClick={() => {
-              if (range.start - 16 < 0) return;
-              setShowLeftArrow(false);
-              setRange({ start: range.start - 16, end: range.end - 16 });
-            }}
+          <Divider
+            h={{ base: '32px', lg: '48px' }}
+            display={{ base: 'none', lg: 'inherit' }}
+            borderWidth={1}
+            orientation='vertical'
           />
-          <IconButton
-            icon={<Image src='assets/icons/arrow-right.svg' />}
-            aria-label='search-options'
-            justifySelf='end'
-            variant='unstyled'
-            _focus={{ border: 'none' }}
-            onClick={() => {
-              if (range.start + 16 >= products.length) return;
-              setShowLeftArrow(true);
-              setRange({ start: range.start + 16, end: range.end + 16 });
-            }}
-          />
-        </HStack>
+          <HStack>
+            <Text
+              fontSize={{ base: 'lg', lg: 'xl' }}
+              color='gray.500'
+              whiteSpace='nowrap'
+            >
+              Sort by:
+            </Text>
+            <Select
+              fontSize='md'
+              color='gray.700'
+              pt={1}
+              display={{ base: 'inherit', lg: 'none' }}
+            >
+              <option
+                onClick={() => {
+                  setSortingMethod(SortingType.MostRecent);
+                  sortByMostRecent();
+                }}
+              >
+                Most Recent
+              </option>
+              <option
+                onClick={() => {
+                  setSortingMethod(SortingType.LowestPrice);
+                  sortByLowestPrice();
+                }}
+              >
+                Lowest Price
+              </option>
+              <option
+                onClick={() => {
+                  setSortingMethod(SortingType.HighestPrice);
+                  sortByHighestPrice();
+                }}
+              >
+                Highest Price
+              </option>
+            </Select>
+          </HStack>
+          <HStack display={{ base: 'none', lg: 'inherit' }}>
+            <Button
+              borderRadius={20}
+              h={12}
+              px={6}
+              fontSize='xl'
+              fontWeight='normal'
+              bg={
+                sortingMethod === SortingType.MostRecent ? '#00d7f6' : '#ececec'
+              }
+              color={
+                sortingMethod === SortingType.MostRecent ? 'white' : 'gray.600'
+              }
+              onClick={() => {
+                setSortingMethod(SortingType.MostRecent);
+                sortByMostRecent();
+              }}
+            >
+              Most recent
+            </Button>
+            <Button
+              borderRadius={20}
+              h={12}
+              px={6}
+              fontSize='xl'
+              fontWeight='normal'
+              bg={
+                sortingMethod === SortingType.LowestPrice
+                  ? '#00d7f6'
+                  : '#ececec'
+              }
+              color={
+                sortingMethod === SortingType.LowestPrice ? 'white' : 'gray.600'
+              }
+              onClick={() => {
+                setSortingMethod(SortingType.LowestPrice);
+                sortByLowestPrice();
+              }}
+            >
+              Lowest Price
+            </Button>
+            <Button
+              borderRadius={20}
+              h={12}
+              px={6}
+              fontSize='xl'
+              fontWeight='normal'
+              bg={
+                sortingMethod === SortingType.HighestPrice
+                  ? '#00d7f6'
+                  : '#ececec'
+              }
+              color={
+                sortingMethod === SortingType.HighestPrice
+                  ? 'white'
+                  : 'gray.600'
+              }
+              onClick={() => {
+                setSortingMethod(SortingType.HighestPrice);
+                sortByHighestPrice();
+              }}
+            >
+              Highest Price
+            </Button>
+          </HStack>
+        </Stack>
+        <NavButtons
+          range={range}
+          setRange={setRange}
+          showLeftArrow={showLeftArrow}
+          setShowLeftArrow={setShowLeftArrow}
+          productsLength={products.length}
+        />
       </HStack>
       <Divider borderWidth={1.25} />
       {!loading && (
         <Grid
-          templateColumns='repeat(4,1fr)'
+          templateColumns={{
+            base: 'repeat(1,1fr)',
+            md: 'repeat(2,1fr)',
+            lg: 'repeat(3,1fr)',
+            xl: 'repeat(4,1fr)',
+          }}
           gap={5}
-          templateRows='repeat(4,1fr)'
           pt={10}
         >
           {products.slice(range.start, range.end).map((product) => (
@@ -182,38 +238,22 @@ const ProductList = ({ user, setUser }: Props) => {
         </Grid>
       )}
 
-      <HStack w='100%' justify='space-between' py={12} pb={0}>
-        <Text fontSize='xl' color='gray.700'>
+      <HStack w='100%' justify='space-between' align='start' py={12} pb={0}>
+        <Text
+          fontSize={{ base: 'lg', lg: 'xl' }}
+          color='gray.700'
+          whiteSpace='nowrap'
+          pt={2}
+        >
           16 of {products.length} products
         </Text>
-        <HStack align='center' justify='center' spacing={5}>
-          <IconButton
-            icon={<Image src='assets/icons/arrow-left.svg' />}
-            display={showLeftArrow ? 'inherit' : 'none'}
-            aria-label='search-options-left'
-            justifySelf='end'
-            variant='unstyled'
-            pt={2}
-            _focus={{ border: 'none' }}
-            onClick={() => {
-              if (range.start - 16 < 0) return;
-              setShowLeftArrow(false);
-              setRange({ start: range.start - 16, end: range.end - 16 });
-            }}
-          />
-          <IconButton
-            icon={<Image src='assets/icons/arrow-right.svg' />}
-            aria-label='search-options'
-            justifySelf='end'
-            variant='unstyled'
-            _focus={{ border: 'none' }}
-            onClick={() => {
-              if (range.start + 16 >= products.length) return;
-              setShowLeftArrow(true);
-              setRange({ start: range.start + 16, end: range.end + 16 });
-            }}
-          />
-        </HStack>
+        <NavButtons
+          range={range}
+          setRange={setRange}
+          showLeftArrow={showLeftArrow}
+          setShowLeftArrow={setShowLeftArrow}
+          productsLength={products.length}
+        />
       </HStack>
       <Divider borderWidth={1} />
     </VStack>
