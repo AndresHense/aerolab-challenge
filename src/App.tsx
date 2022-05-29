@@ -1,4 +1,4 @@
-import { Flex, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Center, Flex, Spinner, Text, VStack } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { getUser } from './api/api';
 import Hero from './components/Hero';
@@ -24,7 +24,9 @@ function App() {
   return (
     <>
       {loading ? (
-        <Text>daw</Text>
+        <Center w='100%' h='100vh'>
+          <Spinner size='xl' />
+        </Center>
       ) : (
         <VStack w='100%' bg='#f9f9f9'>
           <Navbar user={user} />
