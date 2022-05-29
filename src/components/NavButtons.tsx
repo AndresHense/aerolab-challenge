@@ -24,7 +24,7 @@ const NavButtons = ({
         aria-label='search-options-left'
         justifySelf='end'
         variant='unstyled'
-        boxSize={{ base: 3, sm: 12 }}
+        boxSize={{ base: 10, sm: 12 }}
         pt={{ base: 5, lg: 2, xl: 0 }}
         _focus={{ border: 'none' }}
         onClick={() => {
@@ -38,7 +38,7 @@ const NavButtons = ({
         aria-label='search-options'
         justifySelf='end'
         variant='unstyled'
-        boxSize={{ base: 3, sm: 12 }}
+        boxSize={{ base: 10, sm: 12 }}
         _focus={{ border: 'none' }}
         onClick={() => {
           if (range.start + 16 >= productsLength) return;
