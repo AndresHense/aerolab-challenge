@@ -1,5 +1,6 @@
-import { Flex, HStack, Icon, Image, Text } from '@chakra-ui/react';
+import { Flex, HStack, Icon, IconButton, Image, Text } from '@chakra-ui/react';
 import React from 'react';
+import { addPoints } from '../api/api';
 import { User } from '../types';
 
 type Props = {
@@ -26,10 +27,16 @@ const Navbar = ({ user }: Props) => {
           <Text fontSize={{ base: 'lg', lg: 'xl' }} color='gray.700' pl={3}>
             {user.points}
           </Text>
-          <Image
-            src='assets/icons/coin.svg'
+          <IconButton
+            variant='unstyled'
+            _focus={{ border: 'none' }}
+            onClick={() => {
+              addPoints();
+            }}
+            icon={<Image src='assets/icons/coin.svg' />}
             pr={2}
             boxSize={{ base: 9, lg: 10 }}
+            aria-label='add coins'
           />
         </HStack>
       </HStack>

@@ -14,9 +14,8 @@ const Hero = () => {
         color='white'
         fontSize={{ base: '5xl', lg: '6xl' }}
         fontWeight='bold'
-        position='relative'
-        top={{ base: '80%', lg: '75%' }}
         px={{ base: 4, md: 24, lg: 32 }}
+        pt={{ base: '24rem', sm: '26rem', md: '28rem', lg: '23rem' }}
       >
         Electronics
       </Text>

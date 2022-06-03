@@ -21,6 +21,24 @@ const getProducts = async (callback: Function) => {
   }
 };
 
+const addPoints = async () => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.post(
+      'https://coding-challenge-api.aerolab.co/user/points',
+      { amount: 5000 },
+      config
+    );
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+};
 const getUser = async (callback: Function) => {
   try {
     const config = {
@@ -60,4 +78,4 @@ const redeemProduct = async (productId: string) => {
   }
 };
 
-export { getProducts, getUser, redeemProduct };
+export { getProducts, getUser, redeemProduct, addPoints };

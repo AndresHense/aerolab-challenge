@@ -4,6 +4,8 @@ import {
   HStack,
   IconButton,
   Image,
+  Skeleton,
+  SkeletonText,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -20,6 +22,8 @@ type Props = {
 const ProductBox = ({ product, user, setUser }: Props) => {
   const [isHover, setIsHover] = useState(false);
   const [canRedeem, setCanReedem] = useState(product.cost - user.points < 0);
+  const [loading, setLoading] = useState(true);
+
   const handleHover = () => {
     setIsHover(true);
   };
@@ -47,8 +51,14 @@ const ProductBox = ({ product, user, setUser }: Props) => {
         setIsHover(false);
       }}
     >
-      <HStack align='start'>
-        <Image src={product.img.url} />
+      <HStack align='start' w='100%'>
+        <Skeleton isLoaded={!loading} p={0} m={0} w='100%'>
+          <Image
+            src={product.img.url}
+            onLoad={() => setLoading(false)}
+            maxW='inherit'
+          />
+        </Skeleton>
         {!canRedeem ? (
           <HStack
             position='relative'
@@ -92,10 +102,14 @@ const ProductBox = ({ product, user, setUser }: Props) => {
       </HStack>
       <Divider />
       <VStack w='100%' spacing={0} px={2} align='start' pt={2}>
-        <Text fontSize='sm' color='gray.500'>
-          {product.category}
-        </Text>
-        <Text>{product.name}</Text>
+        <SkeletonText isLoaded={!loading} noOfLines={1} pb={loading ? 3 : 0}>
+          <Text fontSize='sm' color='gray.500'>
+            {product.category}
+          </Text>
+        </SkeletonText>
+        <SkeletonText isLoaded={!loading} noOfLines={1}>
+          <Text>{product.name}</Text>
+        </SkeletonText>
       </VStack>
       <VStack
         display={isHover && canRedeem ? 'inherit' : 'none'}
@@ -103,8 +117,8 @@ const ProductBox = ({ product, user, setUser }: Props) => {
         position='relative'
         bg='rgba(47,216,250,0.6)'
         w='276px'
-        py='85px'
-        bottom='271px'
+        py='84px'
+        bottom='276px'
       >
         <HStack>
           <Text pt={1} fontSize='4xl' fontWeight='medium' color='white'>

@@ -25,7 +25,7 @@ const NavButtons = ({
         justifySelf='end'
         variant='unstyled'
         boxSize={{ base: 10, sm: 12 }}
-        pt={{ base: 5, lg: 2, xl: 0 }}
+        pt={{ base: 0, lg: 0, xl: 0 }}
         _focus={{ border: 'none' }}
         onClick={() => {
           if (range.start - 16 < 0) return;
